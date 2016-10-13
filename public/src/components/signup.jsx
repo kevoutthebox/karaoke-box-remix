@@ -5,7 +5,17 @@ import * as actionCreators from '../actions';
 class Signup extends Component {
   handleFormSubmit(formProps) {
     // Call signUpUser action creator to sign up and store in DB
-    this.props.signUpUser(formProps);
+    this.props.signupUser(formProps);
+  }
+
+  renderAlert() {
+    if (this.props.errMsg) {
+      return (
+        <div className="alert alert-danger">
+          Sorry {this.props.errMsg}
+        </div>
+      );
+    }
   }
 
   render() {
@@ -15,17 +25,20 @@ class Signup extends Component {
       <form onSubmit={handleSubmit(this.handleFormSubmit.bind(this))}>
         <fieldset className="form-group">
           <label>Email Address:</label>
-          <input className="form-control" />
+          <input className="form-control" {...email} />
+          {email.touched && email.error && <div className="form-error">{email.error}</div>}
         </fieldset>
         <fieldset className="form-group">
           <label>Password</label>
-          <input className="form-control" />
+          <input className="form-control" {...password} />
+          {password.touched && password.error && <div className="form-error">{password.error}</div>}
         </fieldset>
         <fieldset className="form-group">
           <label>Password Confirmation</label>
-          <input className="form-control" />
+          <input className="form-control" {...passwordConfirmation} />
+          {passwordConfirmation.touched && passwordConfirmation.error && <div className="form-error">{passwordConfirmation.error}</div>}
         </fieldset>
-
+        {this.renderAlert()}
         <button className="btn btn-primary" type="submit">Sign me up!</button>
       </form>
     );
@@ -34,6 +47,22 @@ class Signup extends Component {
 
 function validate(formProps) {
   const errors = {};
+
+  if (!formProps.email) {
+    errors.email = 'Please enter an email';
+  }
+
+  if (!formProps.password) {
+    errors.password = 'Please enter a password';
+  }
+
+  if (!formProps.passwordConfirmation) {
+    errors.passwordConfirmation = 'Please re-enter your password';
+  }
+
+  if (formProps.password !== formProps.passwordConfirmation && formProps.passwordConfirmation !== undefined) {
+    errors.password = "The entered passwords do not match"
+  }
 
   return errors;
 }
