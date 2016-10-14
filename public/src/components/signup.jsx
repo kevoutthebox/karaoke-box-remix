@@ -30,12 +30,12 @@ class Signup extends Component {
         </fieldset>
         <fieldset className="form-group">
           <label>Password</label>
-          <input className="form-control" {...password} />
+          <input className="form-control" type="password" {...password} />
           {password.touched && password.error && <div className="form-error">{password.error}</div>}
         </fieldset>
         <fieldset className="form-group">
           <label>Password Confirmation</label>
-          <input className="form-control" {...passwordConfirmation} />
+          <input className="form-control" type="password" {...passwordConfirmation} />
           {passwordConfirmation.touched && passwordConfirmation.error && <div className="form-error">{passwordConfirmation.error}</div>}
         </fieldset>
         {this.renderAlert()}
@@ -60,7 +60,7 @@ function validate(formProps) {
     errors.passwordConfirmation = 'Please re-enter your password';
   }
 
-  if (formProps.password !== formProps.passwordConfirmation && formProps.passwordConfirmation !== undefined) {
+  if (formProps.password !== formProps.passwordConfirmation && formProps.passwordConfirmation) {
     errors.password = "The entered passwords do not match"
   }
 
