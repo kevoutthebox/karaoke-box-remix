@@ -8,6 +8,14 @@ const mongoose = require('mongoose');
 const fs = require('fs');
 const path = require('path');
 
+const router = require('./router');
+
+// Connecting to MongoDB hosted on MongoLabs
+mongoose.connect(JSON.parse(fs.readFileSync(`${__dirname}/config.json`, 'utf8')).uri, () => {
+  connectedToDB = true;
+  console.log('mongo connection established');
+});
+
 //Setting up the App
 app.use(express.static('./public'));
 app.use(morgan('combined'));
@@ -19,7 +27,7 @@ app.get('*', (req, res) => {
 })
 
 //Setting up the server
-const port = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3000;
 const server = http.createServer(app).listen(port, () => {
-  console.log(`Listening on port ${port}`);
+  console.log(`Listening on port: ${PORT}`);
 });
