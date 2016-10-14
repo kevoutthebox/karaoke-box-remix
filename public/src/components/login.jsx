@@ -3,19 +3,30 @@ import { reduxForm } from 'redux-form';
 import * as actions from '../actions';
 
 class Login extends Component {
+  handleFormSubmit({ email, password }) {
+    //call action creator to log users in
+    this.props.loginUser({ email, password });
+  }
 
   render() {
+    const { handleSubmit, fields: { email, password, passwordConfirmation } } = this.props;
+
     return (
-      <form>
+      <form onSubmit={handleSubmit(this.handleFormSubmit.bind(this))}>
         <fieldset className="form-group">
-          <input className="form-control" />
+          <label>Email Address:</label>
+          <input className="form-control" {...email} />
         </fieldset>
         <fieldset className="form-group">
-          <input className="form-control" />
+          <label>Password:</label>
+          <input className="form-control" type="password" {...password} />
         </fieldset>
         <fieldset className="form-group">
-          <input className="form-control" />
+          <label>Password Confirmation:</label>
+          <input className="form-control" type="password" {...passwordConfirmation} />
+          {password.touched && passwordConfirmation.touched && passwordConfirmation.error && <div className="form-error">{passwordConfirmation.error}</div>}
         </fieldset>
+        <button className="btn btn-primary" type="submit">Submit</button>
       </form>
     );
   }
@@ -28,12 +39,18 @@ function mapStateToProps(state) {
 };
 
 function validate(formProps) {
-  const error = {};
+  const errors = {};
 
-  return error;
+  if (formProps.password !== formProps.passwordConfirmation && formProps.passwordConfirmation) {
+    errors.password = "Passwords do not match"
+    errors.passwordConfirmation = "Passwords do not match"
+  }
+
+  return errors;
 }
 
 export default reduxForm({
   form: 'login',
-  fields: ['email', 'password', 'passwordConfirmation']
+  fields: ['email', 'password', 'passwordConfirmation'],
+  validate
 }, mapStateToProps, actions)(Login)
