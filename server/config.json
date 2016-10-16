@@ -1,3 +1,4 @@
 {
-  "uri" : "mongodb://kevoutthebox:huangboss@ds057476.mlab.com:57476/karaoke-box"
+  "uri" : "mongodb://kevoutthebox:huangboss@ds057476.mlab.com:57476/karaoke-box",
+  "jwtSecret" : "asdp9fu4wqnf995k4sa32hjl8idsjfsaf"
 }

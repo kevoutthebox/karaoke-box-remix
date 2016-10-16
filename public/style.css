@@ -17,3 +17,11 @@ body {
 .navbar-inverse .navbar-brand {
   color: white;
 }
+
+.navbar-inverse .navbar-nav>li>a:hover {
+  background: black
+}
+
+.navbar-inverse .navbar-brand:hover {
+  background: black
+}
