@@ -28,6 +28,6 @@ app.get('*', (req, res) => {
 
 //Setting up the server
 const PORT = process.env.PORT || 3000;
-const server = http.createServer(app).listen(port, () => {
+const server = http.createServer(app).listen(PORT, () => {
   console.log(`Listening on port: ${PORT}`);
 });

@@ -7,7 +7,7 @@ export default class Home extends Component {
   }
   render() {
     return (
-      <form className="enter-form" onSubmit={this.enter.bind(this)}>
+      <form className="enter-form form-group" onSubmit={this.enter.bind(this)}>
         <input ref="name"
           className="form-control"
           placeholder="Please enter name"
