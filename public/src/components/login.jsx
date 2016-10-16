@@ -26,7 +26,7 @@ class Login extends Component {
           <input className="form-control" type="password" {...passwordConfirmation} />
           {password.touched && passwordConfirmation.touched && passwordConfirmation.error && <div className="form-error">{passwordConfirmation.error}</div>}
         </fieldset>
-        <button className="btn btn-primary" type="submit">Submit</button>
+        <button className="btn btn-primary" type="submit">Login</button>
       </form>
     );
   }

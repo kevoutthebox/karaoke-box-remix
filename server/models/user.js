@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-const bcrpyt = require('bcrpyt-nodejs');
+const bcrpyt = require('bcrypt-nodejs');
 
 // Defining the User model
 const userSchema = new Schema({
@@ -9,7 +9,7 @@ const userSchema = new Schema({
 });
 
 // Before saving a password to the DB, we write a hook to encrypt it
-userSchema.pre('save', (next) {
+userSchema.pre('save', (next) => {
   // specifiying a user model
   const user = this;
 

@@ -5,9 +5,10 @@ export default class App extends Component {
   render() {
     return (
       <div>
-        Karaoke Box!
         <Header />
-        {this.props.children}
+        <div className="container">
+          {this.props.children}
+        </div>
       </div>
     );
   }
