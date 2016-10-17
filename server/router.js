@@ -4,7 +4,7 @@ const passport = require('passport');
 
 // configure session false since we're not using cookies
 const requireAuth = passport.authenticate('jwt', { session: false });
-const requireSignin = passport.authenticate('local');
+const requireSignin = passport.authenticate('local', { session: false });
 
 module.exports = function (app) {
   app.post('/api/login', requireSignin, Authentication.login);
