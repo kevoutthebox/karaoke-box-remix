@@ -21,6 +21,8 @@ app.use(express.static('./public'));
 app.use(morgan('combined'));
 app.use(bodyParser.json({ type: '*/*' }));
 
+router(app);
+
 app.get('*', (req, res) => {
   // res.end(fs.readFileSync('../public/index.html'));
   res.sendFile(path.resolve(__dirname, '../public/index.html'));

@@ -10,6 +10,7 @@ function createJwt(user) {
 
 module.exports = {
   signup: (req, res, next) => {
+    console.log(req.body)
     //Pull email and password out of request body
     const { email, password } = req.body;
 
@@ -42,6 +43,7 @@ module.exports = {
     });
   },
   login: (req, res, next) => {
+    console.log(req.body)
     //the middleware after we authenticate user, so just respond with a token
     res.send({ token: createJwt(req.user) });
   },
