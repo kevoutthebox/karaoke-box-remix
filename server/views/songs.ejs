@@ -1,13 +1,21 @@
 <% include partials/header %>
+<div class="container">
+  <header class="jumbotron">
+    <h1> Welcome To The Songreview Section </h1>
+    <p> Explore chart-topping songs </p>
+    <p>
+      <a class="btn btn-primary btn-large" href="songs/new"> Add a new song </a>
+    <p>
+  </header>
 
-<h1> this is the songs page </h1>
 
-<% songs.forEach((song) => { %>
-  <div>
-    <h4> <%=song.name %> </h4>
-    <h5> <%=song.author %> </h5>
-    <img src=" <%= song.image %> " >
-  </div>
-<% }); %>
 
+  <% songs.forEach((song) => { %>
+    <div>
+      <h4> <%=song.name %> </h4>
+      <h5> <%=song.author %> </h5>
+      <img src=" <%= song.image %> " >
+    </div>
+  <% }); %>
+</div> <!--closes container -->
 <% include partials/footer %>

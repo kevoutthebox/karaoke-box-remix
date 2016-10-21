@@ -8,9 +8,14 @@ module.exports = function (app) {
 
   app.post('/songs', (req, res) => {
     // getting data from form
+    let name = req.body.name;
+    let author = req.body.author;
+    let image = req.body.image;
+    let newSong = {name: name, author: author, image: image};
     // writing to database
     // reroute to songs page
-    res.send('post route')
+    res.redirect('/songreview/songs');
+
   });
 
   app.get('/songs/new', (req, res) => {
