@@ -1,0 +1,13 @@
+<% include partials/header %>
+
+<h1> this is the songs page </h1>
+
+<% songs.forEach((song) => { %>
+  <div>
+    <h4> <%=song.name %> </h4>
+    <h5> <%=song.author %> </h5>
+    <img src=" <%= song.image %> " >
+  </div>
+<% }); %>
+
+<% include partials/footer %>

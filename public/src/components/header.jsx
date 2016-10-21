@@ -18,10 +18,10 @@ class Header extends Component {
   renderLeftLinkTags() {
     return [
       <li className="nav-item" key={4}>
-        <Link className="nav-item" to="/about">About</Link>
+        <a className="nav-item" href="/songreview">Song Review!</a>
       </li>,
       <li className="nav-item" key={5}>
-        <Link className="nav-item" to="contact">Contact</Link>
+        <Link className="nav-item" to="/contact">Contact</Link>
       </li>
     ];
   }

@@ -8,7 +8,7 @@ const requireSignin = passport.authenticate('local', { session: false });
 
 module.exports = function (app) {
   app.get('/api/protect', requireAuth, (req, res) => {
-    res.send({ message: "this is a protected route" });
+    res.send({ message: 'this is a protected route' });
   });
   app.post('/api/login', requireSignin, Authentication.login);
   app.post('/api/signup', Authentication.signup);
