@@ -38,6 +38,7 @@ export function loginUser({ email, password }) {
   return function(dispatch) {
     axios.post(`${ROOT_URL}/api/login`, { email, password })
     .then(response => {
+      console.log(response)
       dispatch({ type: AUTH_USER });
       localStorage.setItem({ 'token': response.data.token });
       browserHistory.push('/home');
@@ -50,6 +51,7 @@ export function loginUser({ email, password }) {
 
 export function signoutUser() {
   return function(dispatch) {
+    console.log(response)
     localStorage.removeItem('token');
     //after removing token from localstorage, remove authorization
     return { type: USER_UNAUTHORIZED };

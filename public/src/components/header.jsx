@@ -17,11 +17,11 @@ class Header extends Component {
 
   renderLeftLinkTags() {
     return [
-      <li className="nav-item">
-        <Link className="nav-item" to="/about">About</Link>
+      <li className="nav-item" key={4}>
+        <a className="nav-item" href="/songreview">Song Review!</a>
       </li>,
-      <li className="nav-item">
-        <Link className="nav-item" to="contact">Contact</Link>
+      <li className="nav-item" key={5}>
+        <Link className="nav-item" to="/contact">Contact</Link>
       </li>
     ];
   }
@@ -29,7 +29,7 @@ class Header extends Component {
     //if autenticated display link to signout
     if (this.props.authenticated) {
       return (
-        <li className="nav-item">
+        <li className="nav-item" key={3}>
           <Link className="nav-link" to="/signout">Sign Out</Link>
         </li>
       );

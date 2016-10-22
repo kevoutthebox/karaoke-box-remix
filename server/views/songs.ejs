@@ -1,0 +1,34 @@
+<% include partials/header %>
+
+<div class="container">
+  <header class="jumbotron">
+    <div class="container">
+      <h1> Welcome To The Song Review Section </h1>
+      <p> Explore chart-topping songs </p>
+      <p>
+        <a class="btn btn-primary btn-large" href="songs/new"> Add a new song </a>
+      <p>
+    </div>
+  </header>
+
+  <div class="row">
+    <div class="col-lg-12">
+      <h3>Popular Songs</h3>
+    </div>
+  </div>
+
+  <div class="row text-center" style="display:flex; flex-wrap:wrap">
+    <% allSongs.forEach((song) => { %>
+      <div class="col-md-3 col-sm-6">
+        <div class="thumbnail">
+          <img src=" <%= song.image %> " >
+        </div>
+        <div class="caption">
+          <h4> <%=song.name %> </h4>
+          <h5> <%=song.author %> </h5>
+        </div>
+      </div><!--closes column-->
+    <% }); %>
+  </div>
+</div> <!--closes container -->
+<% include partials/footer %>

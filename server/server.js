@@ -8,7 +8,8 @@ const mongoose = require('mongoose');
 const fs = require('fs');
 const path = require('path');
 
-const router = require('./router');
+const apiRouter = require('./apirouter');
+const reviewRouter = require('./reviewrouter');
 
 // Connecting to MongoDB hosted on MongoLabs
 mongoose.connect(JSON.parse(fs.readFileSync(`${__dirname}/config.json`, 'utf8')).uri, () => {
@@ -17,9 +18,17 @@ mongoose.connect(JSON.parse(fs.readFileSync(`${__dirname}/config.json`, 'utf8'))
 });
 
 //Setting up the App
+app.set('view engine', 'ejs');
+app.set('views', `${__dirname}/views`);
 app.use(express.static('./public'));
 app.use(morgan('combined'));
-app.use(bodyParser.json({ type: '*/*' }));
+app.use(bodyParser.urlencoded({ extended: true }));
+
+//set routes for the song review portion of site using ejs and api server for react app
+const songReviewRouter = express.Router();
+app.use('/songreview', songReviewRouter);
+reviewRouter(songReviewRouter);
+apiRouter(app);
 
 app.get('*', (req, res) => {
   // res.end(fs.readFileSync('../public/index.html'));
