@@ -1,0 +1,15 @@
+<% include ../partials/header %>
+
+<h1><%=song.name%></h1>
+
+<img src="<%= song.image %>">
+
+<p><%=song.description%></p>
+
+<% song.comments.forEach((comment) => { %>
+  <p>
+    <strong><%= comment.author %></strong> - <%= comment.text %>
+  </p>
+<% }) %>
+
+<% include ../partials/footer %>

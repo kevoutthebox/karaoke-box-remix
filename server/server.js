@@ -21,7 +21,7 @@ mongoose.connect(JSON.parse(fs.readFileSync(`${__dirname}/config.json`, 'utf8'))
 app.set('view engine', 'ejs');
 app.set('views', `${__dirname}/views`);
 app.use(express.static('./public'));
-app.use(morgan('combined'));
+// app.use(morgan('combined'));
 app.use(bodyParser.urlencoded({ extended: true }));
 
 //set routes for the song review portion of site using ejs and api server for react app

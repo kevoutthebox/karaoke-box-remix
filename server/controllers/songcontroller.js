@@ -1,4 +1,5 @@
 const Song = require('../models/songmodel');
+const Comment = require('../models/commentmodel');
 
 module.exports = {
   getAllSongs: (req, res, next) => {
@@ -8,7 +9,7 @@ module.exports = {
     Song.find({}, (err, allSongs) => {
       if (err) console.log(err);
       else {
-        res.render('songs', { allSongs: allSongs });
+        res.render('songs/songs', { allSongs: allSongs });
       }
     });
   },
@@ -33,12 +34,13 @@ module.exports = {
   },
   getSongDetail: (req, res, next) => {
     // query from song collection for particular id
-    Song.findById(req.params.id, (err, foundSong) => {
+    Song.findById(req.params.id).populate('comments').exec((err, foundSong) => {
       if (err) {
         console.log(err)
       } else {
         // render song detail with that song
-        res.render('songdetail', { song: foundSong });
+        console.log(typeof foundSong)
+        res.render('songs/songdetail', { song: foundSong });
       }
     });
   },

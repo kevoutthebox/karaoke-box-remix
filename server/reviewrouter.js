@@ -15,5 +15,12 @@ module.exports = function (app) {
 
   app.post('/songs', songController.addNewSong);
 
+// ===========
+// ROUTES FOR comments
+// ===========
+
+  // app.get("songs/:id/comments/new", (req, res) => {
+  //   res.render("comments/new");
+  // })
 
 }
