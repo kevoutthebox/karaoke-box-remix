@@ -6,6 +6,10 @@
 
 <p><%=song.description%></p>
 
+<p>
+  <a class="btn btn-success" href="<%= song._id %>/comments/new">Add a comment</a>
+</p>
+
 <% song.comments.forEach((comment) => { %>
   <p>
     <strong><%= comment.author %></strong> - <%= comment.text %>

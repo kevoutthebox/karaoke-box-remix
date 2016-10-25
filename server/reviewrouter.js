@@ -1,4 +1,5 @@
 const songController = require('./controllers/songcontroller');
+const commentController = require('./controllers/commentcontroller');
 
 module.exports = function (app) {
   app.get('/', (req, res) => {
@@ -19,8 +20,7 @@ module.exports = function (app) {
 // ROUTES FOR comments
 // ===========
 
-  // app.get("songs/:id/comments/new", (req, res) => {
-  //   res.render("comments/new");
-  // })
+  app.get('/songs/:id/comments/new', commentController.serveNewCommentForm);
 
+  app.post('/songs/:id/comments', commentController.addNewComment);
 }
