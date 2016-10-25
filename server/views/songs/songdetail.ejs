@@ -1,19 +1,45 @@
 <% include ../partials/header %>
+<div class="container">
+  <div class="row">
+    <div class="col-md-3">
+      <p class="lead">Songreview</p>
+      <div class="list-group">
+        <li class="list-group-item active">1</li>
+        <li class="list-group-item">2</li>
+        <li class="list-group-item">3</li>
+      </div>
+    </div><!--closes col-md-3 maps-->
+    <div class="col-md-9">
+      <div class="thumbnail">
+        <img class="img-responsive" src="<%= song.image %>">
+        <div class="caption-full">
+          <h4 class="pull-right">Youtube Link</h4>
+          <h1><a><%=song.name%></a></h1>
+          <p><%=song.description%></p>
+        </div><!-- closes caption-full -->
+      </div><!-- closes thumbnail -->
+      <div class="well">
+        <div class="text-right">
+          <a class="btn btn-success" href="<%= song._id %>/comments/new">Add a comment</a>
+        </div><!-- closes text right in well -->
+        <hr>
+        <% song.comments.forEach((comment) => { %>
+          <div class="row">
+            <div class="col-md-12">
+              <strong><%= comment.author %></strong>
+              <span class="pull-right">5 days ago</span>
+              <p>
+                <%= comment.text %>
+              </p>
+            </div>
+          </div><!--closes author and date ago and txt-->
+        <% }) %>
+        </div><!-- closes row for comment -->
+      </div><!-- closes well for comments -->
+    </div><!--closes col-md-9 thumbnail photo-->
+  </div><!--closes row-->
+</div><!--closes container-->
 
-<h1><%=song.name%></h1>
 
-<img src="<%= song.image %>">
-
-<p><%=song.description%></p>
-
-<p>
-  <a class="btn btn-success" href="<%= song._id %>/comments/new">Add a comment</a>
-</p>
-
-<% song.comments.forEach((comment) => { %>
-  <p>
-    <strong><%= comment.author %></strong> - <%= comment.text %>
-  </p>
-<% }) %>
 
 <% include ../partials/footer %>

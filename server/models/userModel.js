@@ -1,12 +1,15 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const bcrpyt = require('bcrypt-nodejs');
+const passportLocalMongoose = require('passport-local-mongoose');
 
 // Defining the User model
 const userSchema = new Schema({
   email: { type: String, lowercase: true, unique: true },
   password: String,
 });
+
+userSchema.plugin(passportLocalMongoose);
 
 // Before saving a password to the DB, we write a hook to encrypt it
 userSchema.pre('save', (next) => {

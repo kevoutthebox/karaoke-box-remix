@@ -39,7 +39,6 @@ module.exports = {
         console.log(err)
       } else {
         // render song detail with that song
-        console.log(typeof foundSong)
         res.render('songs/songdetail', { song: foundSong });
       }
     });
