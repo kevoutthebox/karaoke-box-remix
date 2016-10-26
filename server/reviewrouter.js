@@ -1,5 +1,9 @@
 const songController = require('./controllers/songcontroller');
 const commentController = require('./controllers/commentcontroller');
+const passportService = require('./services/passport');
+const passport = require('passport');
+
+const requireAuth = passport.authenticate('jwt', { session: false });
 
 module.exports = function (app) {
   app.get('/', (req, res) => {
@@ -20,7 +24,7 @@ module.exports = function (app) {
 // ROUTES FOR comments
 // ===========
 
-  app.get('/songs/:id/comments/new', commentController.serveNewCommentForm);
+  app.get('/songs/:id/comments/new', requireAuth, commentController.serveNewCommentForm);
 
   app.post('/songs/:id/comments', commentController.addNewComment);
 }
