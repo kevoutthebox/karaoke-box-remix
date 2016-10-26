@@ -1,4 +1,4 @@
-<% include partials/header %>
+<% include ../partials/header %>
 
 <div class="container">
   <header class="jumbotron">
@@ -27,8 +27,11 @@
           <h4> <%=song.name %> </h4>
           <h5> <%=song.author %> </h5>
         </div>
+        <p>
+          <a href="songs/<%= song._id %>" class="btn btn-primary">More Details</a>
+        </p>
       </div><!--closes column-->
     <% }); %>
   </div>
 </div> <!--closes container -->
-<% include partials/footer %>
+<% include ../partials/footer %>

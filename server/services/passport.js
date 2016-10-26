@@ -8,14 +8,16 @@ const fs = require('fs');
 
 // Setting up options and configure for local Strategy
 const localOptions = { usernameField: 'email' };
-const localLogin = new LocalStrategy(localOptions, (email, password, done) => {
+const localLogin = new LocalStrategy(localOptions, function(email, password, done) {
 // Verify login credentials, and call done with user object, otherwise call done with false
-  user.findOne({ email }, (err, user) => {
-    if (err) { return done(err, false); }
+
+  User.findOne({ email: email }, function(err, user) {
+
+    if (err) { return done(err); }
     if (!user) { return done(null, false); }
 
     // verifying password by hashingg and comparing with user data
-    user.comparePassword(password, (err, isMatch) => {
+    user.verifyPassword(password, (err, isMatch) => {
       if (err) { return done(err); }
       if (!isMatch) { return done(null, false); }
       // if passwords match call Passport's done function with userobject
@@ -32,9 +34,12 @@ const jwtOptions = {
 };
 
 // Creating JWT Strategy
-const jwtLogin = new JwtStrategy(jwtOptions, (payload, done) => {
+const jwtLogin = new JwtStrategy(jwtOptions, function(payload, done) {
+
+
   // Check if a user exist in DB, then call done with that User object
-  User.findById(payload.sub, (err, user) => {
+  User.findById(payload.sub, function(err, user) {
+    console.log("user", user)
     if (err) { return done(err, false); }
 
     if (user) {
@@ -49,4 +54,4 @@ const jwtLogin = new JwtStrategy(jwtOptions, (payload, done) => {
 // Confiture passport to use the strategy
 
 passport.use(jwtLogin);
-passport.use(localLogin)
+passport.use(localLogin);

@@ -1,27 +1,30 @@
 const songController = require('./controllers/songcontroller');
+const commentController = require('./controllers/commentcontroller');
+const passportService = require('./services/passport');
+const passport = require('passport');
+
+const requireAuth = passport.authenticate('jwt', { session: false });
 
 module.exports = function (app) {
   app.get('/', (req, res) => {
     res.render('landing');
   });
 
-  app.post('/songs', (req, res) => {
-    // getting data from form
-    let name = req.body.name;
-    let author = req.body.author;
-    let image = req.body.image;
-    let newSong = {name: name, author: author, image: image};
-    // writing to database
-    // reroute to songs page
-    res.redirect('/songreview/songs');
-  });
-
   app.get('/songs/new', (req, res) => {
-    res.render('new.ejs')
+    res.render('new.ejs');
   });
 
-  app.get('/songs', songController.getAllSongs, (req, res, next) => {
+  app.get('/songs', songController.getAllSongs);
 
-    // res.render('songs', {songs: songs})
-  });
+  app.get('/songs/:id', songController.getSongDetail);
+
+  app.post('/songs', songController.addNewSong);
+
+// ===========
+// ROUTES FOR comments
+// ===========
+
+  app.get('/songs/:id/comments/new', requireAuth, commentController.serveNewCommentForm);
+
+  app.post('/songs/:id/comments', commentController.addNewComment);
 }

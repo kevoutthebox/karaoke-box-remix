@@ -10,17 +10,19 @@ function createJwt(user) {
 
 module.exports = {
   signup: (req, res, next) => {
-    console.log(req.body)
+
     //Pull email and password out of request body
     const { email, password } = req.body;
 
     //If user doesn't input both email and password, return an error
     if (!email || !password) {
+
       return res.status(422).send({ error: 'Missing Email or Password' });
     }
 
     //check if input username already exists in the DB
-    User.findOne({ email }, (err, foundInDB) => {
+    User.findOne({ email: email }, (err, foundInDB) => {
+
       if (err) { return next(err); }
 
       // If email is in DB, return an error
@@ -34,16 +36,18 @@ module.exports = {
         password: password,
       });
 
-      user.save((err) => {
+      user.save((err, data) => {
+
         if (err) { return next(err); }
 
         // Respond with a JWT after user signs up
+
         res.json({ token: createJwt(user) });
       });
     });
   },
   login: (req, res, next) => {
-    console.log(req.body)
+
     //the middleware after we authenticate user, so just respond with a token
     res.send({ token: createJwt(req.user) });
   },

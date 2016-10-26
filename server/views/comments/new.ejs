@@ -1,0 +1,17 @@
+<% include ../partials/header %>
+
+<div class="container">
+  <div class="row">
+    <h1 style="text-align:center;">Add a comment to <%= song.name %> </h1>
+    <div style="width:40%; margin:30px auto;">
+      <form action="/songreview/songs/<%= song._id %>/comments" method="POST">
+        <input class="form-control" type="text" name="comment[text]" placeholder="text" >
+        <input class="form-control" type="text" name="comment[author]" placeholder="author" >
+        <button class="btn btn-primary btn-block btn-lg">Submit</button>
+      </form>
+      <a href="/songreview/songs"> Back to Songlist </a>
+    </div><!-- closes text align center div-->
+  </div><!--closes row-->
+</div>
+
+<% include ../partials/footer %>
