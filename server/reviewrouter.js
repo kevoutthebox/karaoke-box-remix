@@ -7,6 +7,7 @@ const requireAuth = passport.authenticate('jwt', { session: false });
 
 module.exports = function (app) {
   app.get('/', (req, res) => {
+    console.log(req.headers)
     res.render('landing');
   });
 

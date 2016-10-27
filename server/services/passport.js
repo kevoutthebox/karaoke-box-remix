@@ -33,9 +33,9 @@ const jwtOptions = {
   secretOrKey: JSON.parse(fs.readFileSync(path.resolve(__dirname, '../config.json'), 'utf8')).jwtSecret,
 };
 
+
 // Creating JWT Strategy
 const jwtLogin = new JwtStrategy(jwtOptions, function(payload, done) {
-
 
   // Check if a user exist in DB, then call done with that User object
   User.findById(payload.sub, function(err, user) {
