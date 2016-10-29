@@ -36,10 +36,9 @@ const jwtOptions = {
 
 // Creating JWT Strategy
 const jwtLogin = new JwtStrategy(jwtOptions, function(payload, done) {
-
   // Check if a user exist in DB, then call done with that User object
   User.findById(payload.sub, function(err, user) {
-    console.log("user", user)
+
     if (err) { return done(err, false); }
 
     if (user) {

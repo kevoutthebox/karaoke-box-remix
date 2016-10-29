@@ -7,11 +7,25 @@
       <form action="/songreview/songs/<%= song._id %>/comments" method="POST">
         <input class="form-control" type="text" name="comment[text]" placeholder="text" >
         <input class="form-control" type="text" name="comment[author]" placeholder="author" >
-        <button class="btn btn-primary btn-block btn-lg">Submit</button>
+        <button class="btn btn-primary btn-block btn-lg authpost">Submit</button>
       </form>
       <a href="/songreview/songs"> Back to Songlist </a>
     </div><!-- closes text align center div-->
   </div><!--closes row-->
 </div>
+
+<script src="https://code.jquery.com/jquery-2.2.4.min.js"
+   integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="
+   crossorigin="anonymous">
+</script>
+<script>
+$(".authpost").on("click", function(e) {
+  $.ajax({
+      url: "<%= song._id %>/comments/new",
+      type: "GET",
+      headers: {'authorization': localStorage.getItem('token')},
+  });
+});
+</script>
 
 <% include ../partials/footer %>

@@ -6,8 +6,12 @@ const passport = require('passport');
 const requireAuth = passport.authenticate('jwt', { session: false });
 
 module.exports = function (app) {
+  app.use('*', (req, res,next) => {
+    console.log('auth',req.headers.authorization)
+    next()
+  });
+
   app.get('/', (req, res) => {
-    console.log(req.headers)
     res.render('landing');
   });
 
@@ -28,4 +32,15 @@ module.exports = function (app) {
   app.get('/songs/:id/comments/new', requireAuth, commentController.serveNewCommentForm);
 
   app.post('/songs/:id/comments', commentController.addNewComment);
+
+// ==========
+// ROUTES FOR AUTH
+// ==========
+  app.get("/register", (req, res) => {
+    res.render("register");
+  });
+
+  app.post("/register", (req, res) => {
+    res.send("signing out");
+  });
 }

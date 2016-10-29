@@ -7,6 +7,9 @@ const http = require('http');
 const mongoose = require('mongoose');
 const fs = require('fs');
 const path = require('path');
+const passport = require('passport');
+const LocalStrategy = require('passport-local');
+const UserSR = require('./models/songreview-usermodel');
 
 const apiRouter = require('./apirouter');
 const reviewRouter = require('./reviewrouter');
@@ -26,6 +29,18 @@ app.use(bodyParser.json({ type: '*/*' }));
 app.use(bodyParser.urlencoded({ extended: true }));
 //set routes for the song review portion of site using ejs and api server for react app
 const songReviewRouter = express.Router();
+//using passport for song review section of site
+songReviewRouter.use(require('express-session')({
+  secret: JSON.parse(fs.readFileSync(`${__dirname}/config.json`, 'utf8')).passportSecret,
+  resave: false,
+  saveUninitialized: false,
+}));
+songReviewRouter.use(passport.initialize())
+songReviewRouter.use(passport.session())
+passport.use(new LocalStrategy(UserSR.authenticate()));
+passport.serializeUser(UserSR.serializeUser());
+passport.deserializeUser(UserSR.deserializeUser());
+
 app.use('/songreview', songReviewRouter);
 reviewRouter(songReviewRouter);
 apiRouter(app);
