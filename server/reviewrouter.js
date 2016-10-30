@@ -1,13 +1,14 @@
 const songController = require('./controllers/songcontroller');
 const commentController = require('./controllers/commentcontroller');
 const passportService = require('./services/passport');
+const userSRController = require('./controllers/songreview-authcontroller');
 const passport = require('passport');
 
 const requireAuth = passport.authenticate('jwt', { session: false });
 
 module.exports = function (app) {
   app.use('*', (req, res,next) => {
-    console.log('auth',req.headers.authorization)
+    console.log('auth',req.body)
     next()
   });
 
@@ -16,7 +17,7 @@ module.exports = function (app) {
   });
 
   app.get('/songs/new', (req, res) => {
-    res.render('new.ejs');
+    res.render('songs/new.ejs');
   });
 
   app.get('/songs', songController.getAllSongs);
@@ -40,7 +41,7 @@ module.exports = function (app) {
     res.render("register");
   });
 
-  app.post("/register", (req, res) => {
-    res.send("signing out");
+  app.post("/register", userSRController.registerUser, (req, res) => {
+
   });
 }
