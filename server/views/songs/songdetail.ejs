@@ -20,7 +20,7 @@
       </div><!-- closes thumbnail -->
       <div class="well">
         <div class="text-right">
-          <a class="btn btn-success authpost">Add a comment</a>
+          <a class="btn btn-success" href="/songreview/songs/<%= song.id %>/comments/new">Add a comment</a>
         </div><!-- closes text right in well -->
         <hr>
         <% song.comments.forEach((comment) => { %>

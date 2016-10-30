@@ -6,9 +6,17 @@ const passport = require('passport');
 
 const requireAuth = passport.authenticate('jwt', { session: false });
 
+// middleware to protect routes
+
+function protectedRoute(req, res, next) {
+  if (req.isAuthenticated()) {
+    return next();
+  }
+  res.redirect('/songreview/login');
+}
+
 module.exports = function (app) {
   app.use('*', (req, res,next) => {
-    console.log('auth',req.body)
     next()
   });
 
@@ -30,18 +38,35 @@ module.exports = function (app) {
 // ROUTES FOR comments
 // ===========
 
-  app.get('/songs/:id/comments/new', requireAuth, commentController.serveNewCommentForm);
+  app.get('/songs/:id/comments/new', protectedRoute, commentController.serveNewCommentForm);
 
-  app.post('/songs/:id/comments', commentController.addNewComment);
+  app.post('/songs/:id/comments', protectedRoute, commentController.addNewComment);
 
 // ==========
 // ROUTES FOR AUTH
 // ==========
-  app.get("/register", (req, res) => {
-    res.render("register");
+
+  //register routes
+  app.get('/register', (req, res) => {
+    res.render('register');
   });
 
-  app.post("/register", userSRController.registerUser, (req, res) => {
+  app.post('/register', userSRController.registerUser);
 
+  //login routes
+  app.get('/login', (req, res) => {
+    res.render('login');
+  });
+
+  app.post('/login', passport.authenticate('local',
+    {
+      successRedirect: '/songreview/songs',
+      failureRedirect: '/songreview/login',
+    }));
+
+  //logout routes
+  app.get('/logout', (req, res) => {
+    req.logout();
+    res.redirect('/songreview/songs')
   });
 }
