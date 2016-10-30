@@ -20,6 +20,11 @@ module.exports = function (app) {
     next()
   });
 
+  app.use((req, res, next) => {
+    res.locals.loggedinUser = req.user;
+    next();
+  });
+
   app.get('/', (req, res) => {
     res.render('landing');
   });

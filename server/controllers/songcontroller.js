@@ -9,7 +9,7 @@ module.exports = {
     Song.find({}, (err, allSongs) => {
       if (err) console.log(err);
       else {
-        res.render('songs/songs', { allSongs: allSongs });
+        res.render('songs/songs', { allSongs: allSongs, loggedinUser: req.user });
       }
     });
   },
