@@ -17,8 +17,12 @@
           <h1><a><%=song.name%></a></h1>
           <p><%=song.description%></p>
           <p>
-            <em>Submitted by</em><%= campground.author.username %>
+            <em>Submitted by</em><%= song.author.username %>
           </p>
+          <a class="btn btn-xs btn-warning" href="/songreview/songs/<%= song._id %>/edit">Edit</a>
+          <form id="delete-form" action="/songs/<%= song._id %>?_method=DELETE" method="POST">
+            <button class="btn btn-xs btn-delete">Delete</button>
+          </form>
         </div><!-- closes caption-full -->
       </div><!-- closes thumbnail -->
       <div class="well">

@@ -48,4 +48,46 @@ module.exports = {
       }
     });
   },
-}
+  serveEditPage: (req, res, next) => {
+    Song.findById(req.params.id, (err, foundSong) => {
+      res.render("songs/edit", {song: foundSong});
+    });
+  },
+  updateSong: (req, res, next) => {
+    Song.findByIdAndUpdate(req.params.id, req.body.song, (err, foundSong) => {
+      if(err) {
+        res.redirect('/songreview/songs');
+      } else {
+        res.redirect(`/songreview/songs/${req.params.id}`);
+      }
+    });
+  },
+  deleteSong: (req, res, next) => {
+    Song.findByIdAndRemove(req.params.id, (err) => {
+      if (err) {
+        res.redirect('/songreview/songs');
+      } else {
+        res.redirect('/songreview/songs');
+      }
+    });
+  },
+  checkSongOwner: (req, res, next) => {
+    //check if user is logged in
+    if (req.isAuthenticated()) {
+      Song.findById(req.params.id, (err, foundSong) => {
+        if (err) {
+          res.redirect("back");
+        } else {
+          //does user own song
+          if(foundSong.author.id.equals(req.user._id)) {
+            next();
+          } else {
+            res.redirect('back');
+          }
+        }
+      });
+    } else {
+      res.redirect('back');
+    }
+  },
+};
