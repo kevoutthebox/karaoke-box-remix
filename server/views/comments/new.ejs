@@ -6,7 +6,6 @@
     <div style="width:40%; margin:30px auto;">
       <form action="/songreview/songs/<%= song._id %>/comments" method="POST">
         <input class="form-control" type="text" name="comment[text]" placeholder="text" >
-        <input class="form-control" type="text" name="comment[author]" placeholder="author" >
         <button class="btn btn-primary btn-block btn-lg authpost">Submit</button>
       </form>
       <a href="/songreview/songs"> Back to Songlist </a>

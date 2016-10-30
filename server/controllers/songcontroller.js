@@ -16,14 +16,19 @@ module.exports = {
   addNewSong: (req, res, next) => {
     // Use data from form and save the document to DB
     let name = req.body.name;
-    let author = req.body.author;
+    let artist = req.body.artist;
     let image = req.body.image;
     let description = req.body.description;
+    let author = {
+      id: req.user._id,
+      username: req.user.username
+    }
     let newSong = new Song({
       name: name,
-      author: author,
+      artist: artist,
       image: image,
       description: description,
+      author: author,
     });
     console.log(newSong)
     newSong.save((err) => {

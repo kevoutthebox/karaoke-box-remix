@@ -24,6 +24,9 @@ module.exports = {
           if (err){
             console.log(err)
           } else {
+            //add username and id to comment
+            req.user
+            //save comment to db
             song.comments.push(comment);
             song.save();
             res.redirect('/songreview/songs/' + song._id);

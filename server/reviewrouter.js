@@ -29,7 +29,7 @@ module.exports = function (app) {
     res.render('landing');
   });
 
-  app.get('/songs/new', (req, res) => {
+  app.get('/songs/new', protectedRoute, (req, res) => {
     res.render('songs/new.ejs');
   });
 
