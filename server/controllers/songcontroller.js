@@ -44,6 +44,7 @@ module.exports = {
         console.log(err)
       } else {
         // render song detail with that song
+        console.log(foundSong.comment)
         res.render('songs/songdetail', { song: foundSong });
       }
     });

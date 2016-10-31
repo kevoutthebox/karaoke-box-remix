@@ -22,7 +22,7 @@
           <% if (loggedinUser && song.author.id.equals(loggedinUser._id)) { %>
           <a class="btn btn-xs btn-warning" href="/songreview/songs/<%= song._id %>/edit">Edit</a>
           <form id="delete-form" action="/songs/<%= song._id %>?_method=DELETE" method="POST">
-            <button class="btn btn-xs btn-delete">Delete</button>
+            <button class="btn btn-xs btn-danger">Delete</button>
           </form>
           <% } %>
         </div><!-- closes caption-full -->
@@ -40,13 +40,17 @@
               <p>
                 <%= comment.text %>
               </p>
+            <% if (loggedinUser && comment.author.id.equals(loggedinUser._id)) { %>
+
               <a class="btn btn-xs btn-warning"
-                 href="/songreview/songs/<%= song._id %>/comments/<% comment._id %>/edit">
+
+                 href="/songreview/songs/<%= song._id %>/comments/<%= comment._id %>/edit">
                  Edit
               </a>
-              <form action="/songreview/songs/<%= song._id %>/comments/<%= comment._id %>">
-                  <button class="btn btn-xs btn-danger delete-form">Delete</button>
+              <form id="delete-form" action="/songreview/songs/<%= song._id %>/comments/<%= comment._id %>">
+                  <button class="btn btn-xs btn-danger">Delete</button>
               </form>
+            <% } %>
             </div><!--closes column for comment-->
           </div><!--closes author and date ago and txt-->
         <% }) %>

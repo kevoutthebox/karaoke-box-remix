@@ -10,6 +10,7 @@ const path = require('path');
 const passport = require('passport');
 const LocalStrategy = require('passport-local');
 const UserSR = require('./models/songreview-usermodel');
+const seedDb = require('./seed');
 
 const apiRouter = require('./apirouter');
 const reviewRouter = require('./reviewrouter');
@@ -51,6 +52,8 @@ app.get('*', (req, res) => {
   res.sendFile(path.resolve(__dirname, '../public/index.html'));
 })
 
+// undomment if you want to seed db with fresh data
+// seedDb();
 //Setting up the server
 const PORT = process.env.PORT || 3000;
 const server = http.createServer(app).listen(PORT, () => {

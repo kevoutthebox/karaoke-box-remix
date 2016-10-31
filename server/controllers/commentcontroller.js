@@ -38,10 +38,11 @@ module.exports = {
     });
   },
   serveEditPage: (req, res) => {
-    Comment.findById(req.params.comment, (err, foundComment) => {
+    Comment.findById(req.params.comment_id, (err, foundComment) => {
       if (err) {
         res.redirect("back");
       } else {
+        console.log('found', foundComment)
         res.render("comments/edit", { song_id: req.params.id, comment: foundComment });
       }
     })
@@ -63,5 +64,24 @@ module.exports = {
         res.redirect('/songreview/songs/req.params.id');
       }
     })
+  },
+  checkCommentOwner: (req, res, next) => {
+    //check if user is logged in
+    if (req.isAuthenticated()) {
+      Comment.findById(req.params.comment_id, (err, foundComment) => {
+        if (err) {
+          res.redirect("back");
+        } else {
+          //does user own song
+          if(foundComment.author.id.equals(req.user._id)) {
+            next();
+          } else {
+            res.redirect('back');
+          }
+        }
+      });
+    } else {
+      res.redirect('back');
+    }
   },
 };
