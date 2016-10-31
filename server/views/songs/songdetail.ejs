@@ -41,7 +41,6 @@
                 <%= comment.text %>
               </p>
             <% if (loggedinUser && comment.author.id.equals(loggedinUser._id)) { %>
-
               <a class="btn btn-xs btn-warning"
                  href="/songreview/songs/<%= song._id %>/comments/<%= comment._id %>/edit">
                  Edit
