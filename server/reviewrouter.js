@@ -61,6 +61,12 @@ module.exports = function (app) {
 
   app.post('/songs/:id/comments', protectedRoute, commentController.addNewComment);
 
+  app.get('/songs/:id/comments/edit', commentController.serveEditPage);
+
+  app.put('/songs/:id/comments/:comment_id', commentController.updateComment);
+
+  app.delete('songs/:id/comments/:comment_id', commentController.deleteComment);
+
 // ==========
 // ROUTES FOR AUTH
 // ==========

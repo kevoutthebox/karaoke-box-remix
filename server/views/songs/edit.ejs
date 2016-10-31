@@ -2,7 +2,7 @@
 
 <div class="container">
   <div class="row">
-    <h1 style="text-align:center;">Add new song </h1>
+    <h1 style="text-align:center;">Edit song </h1>
     <div style="width:40%; margin:30px auto;">
       <form action="/songreview/songs/<%= song._id %>?_method=PUT" method="POST">
         <input class="form-control" type="text" name="song[name]" value="<%= song.name %>" >

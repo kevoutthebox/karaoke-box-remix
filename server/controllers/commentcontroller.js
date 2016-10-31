@@ -25,7 +25,9 @@ module.exports = {
             console.log(err)
           } else {
             //add username and id to comment
-            req.user
+            comment.author.id = req.user._id;
+            comment.author.username = req.user.username;
+            comment.save();
             //save comment to db
             song.comments.push(comment);
             song.save();
@@ -34,5 +36,32 @@ module.exports = {
         })
       }
     });
+  },
+  serveEditPage: (req, res) => {
+    Comment.findById(req.params.comment, (err, foundComment) => {
+      if (err) {
+        res.redirect("back");
+      } else {
+        res.render("comments/edit", { song_id: req.params.id, comment: foundComment });
+      }
+    })
+  },
+  updateComment: (req, res) => {
+    Comment.findByIdAndUpdate(req.params.comment_id, req.body.comment, (err, updatedComment) => {
+      if (err) {
+        res.redirect('back');
+      } else {
+        res.redirect(`/songreview/songs/${req.params.id}`);
+      }
+    })
+  },
+  deleteComment: (req, res) => {
+    Comment.findByIdAndRemove(req.params.comment_id, (err) => {
+      if(err) {
+        res.redirect('back');
+      } else {
+        res.redirect('/songreview/songs/req.params.id');
+      }
+    })
   },
 };
