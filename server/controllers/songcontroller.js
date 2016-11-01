@@ -77,17 +77,20 @@ module.exports = {
     if (req.isAuthenticated()) {
       Song.findById(req.params.id, (err, foundSong) => {
         if (err) {
+          req.flash('error', "no song found");
           res.redirect("back");
         } else {
           //does user own song
           if(foundSong.author.id.equals(req.user._id)) {
             next();
           } else {
+            req.flash('error', 'you do not have permission');
             res.redirect('back');
           }
         }
       });
     } else {
+      req.flash('error', 'please login to get access')
       res.redirect('back');
     }
   },

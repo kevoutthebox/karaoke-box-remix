@@ -22,7 +22,8 @@ module.exports = {
       } else {
         Comment.create(req.body.comment, (err, comment) => {
           if (err){
-            console.log(err)
+            req.flash('error', 'error, comment did not save');
+            console.log(err);
           } else {
             //add username and id to comment
             comment.author.id = req.user._id;
@@ -31,6 +32,7 @@ module.exports = {
             //save comment to db
             song.comments.push(comment);
             song.save();
+            req.flash('success', 'comment successfully added');
             res.redirect('/songreview/songs/' + song._id);
           }
         })
@@ -42,7 +44,7 @@ module.exports = {
       if (err) {
         res.redirect("back");
       } else {
-        console.log('found', foundComment)
+        console.log('found', foundComment);
         res.render("comments/edit", { song_id: req.params.id, comment: foundComment });
       }
     })
@@ -61,6 +63,7 @@ module.exports = {
       if(err) {
         res.redirect('back');
       } else {
+        req.flash('success', 'Successfully deleted comment');
         res.redirect('/songreview/songs/req.params.id');
       }
     })
@@ -76,11 +79,13 @@ module.exports = {
           if(foundComment.author.id.equals(req.user._id)) {
             next();
           } else {
+            req.flash('error', 'you do not have permission')
             res.redirect('back');
           }
         }
       });
     } else {
+      req.flash('error', 'please log in first');
       res.redirect('back');
     }
   },

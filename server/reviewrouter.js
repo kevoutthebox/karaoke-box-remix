@@ -4,6 +4,7 @@ const passportService = require('./services/passport');
 const userSRController = require('./controllers/songreview-authcontroller');
 const passport = require('passport');
 const methodOverride = require('method-override');
+const flash = require('connect-flash');
 
 const requireAuth = passport.authenticate('jwt', { session: false });
 
@@ -13,6 +14,7 @@ function protectedRoute(req, res, next) {
   if (req.isAuthenticated()) {
     return next();
   }
+  req.flash('error', 'this route requires logging in');
   res.redirect('/songreview/login');
 }
 
@@ -21,11 +23,16 @@ module.exports = function (app) {
     next()
   });
 
+  //use this for put and delete api endpoints
   app.use(methodOverride('_method'));
+  //use this for flash messages
+  app.use(flash());
 
-//middleware to have user data throughout routes
+  //middleware to have user data throughout routes
   app.use((req, res, next) => {
     res.locals.loggedinUser = req.user;
+    res.locals.error = req.flash('error');
+    res.locals.success = req.flash('success');
     next();
   });
 
@@ -80,7 +87,7 @@ module.exports = function (app) {
 
   //login routes
   app.get('/login', (req, res) => {
-    res.render('login');
+    res.render('login', { message: req.flash('error') });
   });
 
   app.post('/login', passport.authenticate('local',
@@ -92,6 +99,7 @@ module.exports = function (app) {
   //logout routes
   app.get('/logout', (req, res) => {
     req.logout();
+    req.flash('success', 'You are now logged out')
     res.redirect('/songreview/songs')
   });
 }
