@@ -1,10 +1,29 @@
 <% include ./partials/header %>
 
-<h1> Login Page </h1>
-<form action="/songreview/login" method="POST">
-  <input type="text" name="username" placeholder="username">
-  <input type="text" name="password" placeholder="password">
-  <button>Login</button>
-</form>
+<div class="container">
+  <div class="row">
+    <div class="text-center">
+      <h1>Login</h1>
+        <form action="/songreview/login" method="POST">
+          <fieldset class="form-group">
+            <div class="col-sm-4 col-sm-push-4">
+              <input class="form-control" type="text" name="username" placeholder="username">
+            </div><!--closes col-->
+          </fieldset>
+          <fieldset class="form-group">
+            <div class="col-sm-4 col-sm-push-4">
+              <input class="form-control" type="text" name="password" placeholder="password">
+              </div><!--closes col-->
+          </fieldset>
+          <fieldset class="form-group">
+            <div class="col-sm-4 col-sm-push-4">
+              <button class="btn btn-primary form-control">Login</button>
+            </div><!--closes col-->
+          </fieldset>
+        </form>
+    </div><!--closes text-center-->
+  </div><!--closes row-->
+</div><!--closes container-->
+
 
 <% include ./partials/footer %>

@@ -94,12 +94,13 @@ module.exports = function (app) {
     {
       successRedirect: '/songreview/songs',
       failureRedirect: '/songreview/login',
+      failureFLash: true,
     }));
 
   //logout routes
   app.get('/logout', (req, res) => {
     req.logout();
-    req.flash('success', 'You are now logged out')
-    res.redirect('/songreview/songs')
+    req.flash('success', 'You are now logged out');
+    res.redirect('/songreview/songs');
   });
 }

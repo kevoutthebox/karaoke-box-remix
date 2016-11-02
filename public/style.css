@@ -37,3 +37,30 @@ body {
 #delete-form {
   display: inline;
 }
+
+.home {
+  position: absolute;
+  width: 100%;
+  height: 125%;
+  opacity: 0.9;
+  background-image: url(http://blog.symphonicdistribution.com/wp-content/uploads/2014/09/boss-fight-free-high-quality-stock-images-photos-photography-concert-singing-crowd.jpg);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  margin-top: -20px;
+}
+
+.home-content {
+  margin: 150px auto;
+}
+
+#home-greeting {
+  color: white;
+  padding-bottom: 20px;
+  font-size: 5.0em;
+  text-shadow: 2px 2px 4px black;
+}
+
+#view-songs {
+  box-shadow: 0px 0px 30px black;
+}
