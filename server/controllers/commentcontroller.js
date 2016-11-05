@@ -22,14 +22,71 @@ module.exports = {
       } else {
         Comment.create(req.body.comment, (err, comment) => {
           if (err){
-            console.log(err)
+            req.flash('error', 'error, comment did not save');
+            console.log(err);
           } else {
+            //add username and id to comment
+            comment.author.id = req.user._id;
+            comment.author.username = req.user.username;
+            comment.save();
+            //save comment to db
             song.comments.push(comment);
             song.save();
+            req.flash('success', 'comment successfully added');
             res.redirect('/songreview/songs/' + song._id);
           }
         })
       }
     });
+  },
+  serveEditPage: (req, res) => {
+    Comment.findById(req.params.comment_id, (err, foundComment) => {
+      if (err) {
+        res.redirect("back");
+      } else {
+        console.log('found', foundComment);
+        res.render("comments/edit", { song_id: req.params.id, comment: foundComment });
+      }
+    })
+  },
+  updateComment: (req, res) => {
+    Comment.findByIdAndUpdate(req.params.comment_id, req.body.comment, (err, updatedComment) => {
+      if (err) {
+        res.redirect('back');
+      } else {
+        res.redirect(`/songreview/songs/${req.params.id}`);
+      }
+    })
+  },
+  deleteComment: (req, res) => {
+    Comment.findByIdAndRemove(req.params.comment_id, (err) => {
+      if(err) {
+        res.redirect('back');
+      } else {
+        req.flash('success', 'Successfully deleted comment');
+        res.redirect('/songreview/songs/req.params.id');
+      }
+    })
+  },
+  checkCommentOwner: (req, res, next) => {
+    //check if user is logged in
+    if (req.isAuthenticated()) {
+      Comment.findById(req.params.comment_id, (err, foundComment) => {
+        if (err) {
+          res.redirect("back");
+        } else {
+          //does user own song
+          if(foundComment.author.id.equals(req.user._id)) {
+            next();
+          } else {
+            req.flash('error', 'you do not have permission')
+            res.redirect('back');
+          }
+        }
+      });
+    } else {
+      req.flash('error', 'please log in first');
+      res.redirect('back');
+    }
   },
 };

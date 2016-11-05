@@ -9,21 +9,26 @@ module.exports = {
     Song.find({}, (err, allSongs) => {
       if (err) console.log(err);
       else {
-        res.render('songs/songs', { allSongs: allSongs });
+        res.render('songs/songs', { allSongs: allSongs, loggedinUser: req.user });
       }
     });
   },
   addNewSong: (req, res, next) => {
     // Use data from form and save the document to DB
     let name = req.body.name;
-    let author = req.body.author;
+    let artist = req.body.artist;
     let image = req.body.image;
     let description = req.body.description;
+    let author = {
+      id: req.user._id,
+      username: req.user.username
+    }
     let newSong = new Song({
       name: name,
-      author: author,
+      artist: artist,
       image: image,
       description: description,
+      author: author,
     });
     console.log(newSong)
     newSong.save((err) => {
@@ -39,8 +44,54 @@ module.exports = {
         console.log(err)
       } else {
         // render song detail with that song
+        console.log(foundSong.comment)
         res.render('songs/songdetail', { song: foundSong });
       }
     });
   },
-}
+  serveEditPage: (req, res, next) => {
+    Song.findById(req.params.id, (err, foundSong) => {
+      res.render("songs/edit", {song: foundSong});
+    });
+  },
+  updateSong: (req, res, next) => {
+    Song.findByIdAndUpdate(req.params.id, req.body.song, (err, foundSong) => {
+      if(err) {
+        res.redirect('/songreview/songs');
+      } else {
+        res.redirect(`/songreview/songs/${req.params.id}`);
+      }
+    });
+  },
+  deleteSong: (req, res, next) => {
+    Song.findByIdAndRemove(req.params.id, (err) => {
+      if (err) {
+        res.redirect('/songreview/songs');
+      } else {
+        res.redirect('/songreview/songs');
+      }
+    });
+  },
+  checkSongOwner: (req, res, next) => {
+    //check if user is logged in
+    if (req.isAuthenticated()) {
+      Song.findById(req.params.id, (err, foundSong) => {
+        if (err) {
+          req.flash('error', "no song found");
+          res.redirect("back");
+        } else {
+          //does user own song
+          if(foundSong.author.id.equals(req.user._id)) {
+            next();
+          } else {
+            req.flash('error', 'you do not have permission');
+            res.redirect('back');
+          }
+        }
+      });
+    } else {
+      req.flash('error', 'please login to get access')
+      res.redirect('back');
+    }
+  },
+};

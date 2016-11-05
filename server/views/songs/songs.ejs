@@ -6,7 +6,7 @@
       <h1> Welcome To The Song Review Section </h1>
       <p> Explore chart-topping songs </p>
       <p>
-        <a class="btn btn-primary btn-large" href="songs/new"> Add a new song </a>
+        <a class="btn btn-primary btn-large" href="/songreview/songs/new"> Add a new song </a>
       <p>
     </div>
   </header>
@@ -25,7 +25,7 @@
         </div>
         <div class="caption">
           <h4> <%=song.name %> </h4>
-          <h5> <%=song.author %> </h5>
+          <h5> <%=song.artist %> </h5>
         </div>
         <p>
           <a href="songs/<%= song._id %>" class="btn btn-primary">More Details</a>

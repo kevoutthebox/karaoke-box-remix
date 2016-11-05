@@ -16,22 +16,40 @@
           <h4 class="pull-right">Youtube Link</h4>
           <h1><a><%=song.name%></a></h1>
           <p><%=song.description%></p>
+          <p>
+            <em>Submitted by</em><%= song.author.username %>
+          </p>
+          <% if (loggedinUser && song.author.id.equals(loggedinUser._id)) { %>
+          <a class="btn btn-xs btn-warning" href="/songreview/songs/<%= song._id %>/edit">Edit</a>
+          <form id="delete-form" action="/songs/<%= song._id %>?_method=DELETE" method="POST">
+            <button class="btn btn-xs btn-danger">Delete</button>
+          </form>
+          <% } %>
         </div><!-- closes caption-full -->
       </div><!-- closes thumbnail -->
       <div class="well">
         <div class="text-right">
-          <a class="btn btn-success" href="<%= song._id %>/comments/new">Add a comment</a>
+          <a class="btn btn-success" href="/songreview/songs/<%= song.id %>/comments/new">Add a comment</a>
         </div><!-- closes text right in well -->
         <hr>
         <% song.comments.forEach((comment) => { %>
           <div class="row">
             <div class="col-md-12">
-              <strong><%= comment.author %></strong>
+              <strong><%= comment.author.username %></strong>
               <span class="pull-right">5 days ago</span>
               <p>
                 <%= comment.text %>
               </p>
-            </div>
+            <% if (loggedinUser && comment.author.id.equals(loggedinUser._id)) { %>
+              <a class="btn btn-xs btn-warning"
+                 href="/songreview/songs/<%= song._id %>/comments/<%= comment._id %>/edit">
+                 Edit
+              </a>
+              <form id="delete-form" action="/songreview/songs/<%= song._id %>/comments/<%= comment._id %>">
+                  <button class="btn btn-xs btn-danger">Delete</button>
+              </form>
+            <% } %>
+            </div><!--closes column for comment-->
           </div><!--closes author and date ago and txt-->
         <% }) %>
         </div><!-- closes row for comment -->
@@ -39,7 +57,6 @@
     </div><!--closes col-md-9 thumbnail photo-->
   </div><!--closes row-->
 </div><!--closes container-->
-
 
 
 <% include ../partials/footer %>
